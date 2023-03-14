@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.RegistUserDAO;
 import model.Account;
 import model.AccountCheck;
-
 /**
  * Servlet implementation class RegistUser
  */
@@ -54,19 +54,24 @@ public class RegistUser extends HttpServlet {
 			System.out.println(result);
 		}
 		
-		//エラーメッセージの確認。
-		String errMsg = checkErrMsg(checkResult);
+		//registUserFormへ表示させるメッセージの確認。
+		String resultMsg = checkErrMsg(checkResult);
 		
-		//errMsgがnullなら登録。エラーメッセージがあるならregistUserFormへforward
-		//エラーメッセージはリクエストスコープに保存(このリクエストが終わった後に必要なくなるためリクエストスコープを選択)
-		if(errMsg.length() == 0) {
-			//アカウント登録依頼(DBへ)
-			System.out.println("登録まで進んでいる");
-		} else {
-			request.setAttribute("ErrorMsg", errMsg);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registUserForm.jsp");
-			dispatcher.forward(request, response);
-		}
+		//Msgが""ならアカウントチェックは全てtrue
+		//登録に進み、真偽値によってメッセージを格納
+		if(resultMsg.length() == 0) {
+			RegistUserDAO registUserDAO = new RegistUserDAO();
+			boolean registResult = registUserDAO.registUser(account);
+			if(registResult) {
+				resultMsg += "登録完了";
+			} else {
+				resultMsg += "登録できませんでした";
+			}
+		} 
+		
+		request.setAttribute("ResultMsg", resultMsg);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registUserForm.jsp");
+		dispatcher.forward(request, response);
 		
 		
 	}

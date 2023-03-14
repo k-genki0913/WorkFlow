@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,10 @@
 	<option value="3">係員</option>
 </select><br>
 <input type="submit" value="登録">
-
 </form>
+<c:if test="${ResultMsg != null }">
+	<c:out value="${ResultMsg }" />
+</c:if>
+
 </body>
 </html>
