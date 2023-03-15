@@ -22,10 +22,6 @@ public class Account implements Serializable{
 		return this.id;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
 	public String getPassword() {
 		return this.password;
 	}
