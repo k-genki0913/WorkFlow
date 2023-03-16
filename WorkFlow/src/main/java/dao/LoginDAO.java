@@ -28,7 +28,7 @@ public class LoginDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
 			//引数のUSERIDと一致するデータを検索するSELECT文を作成
 			//アカウントとパスワードの一致を確認するためだけなので、IDとPASSの情報のみ取得
-			String sql = "SELECT ＊ FROM ACCOUNT WHERE USERID = ?";
+			String sql = "SELECT * FROM ACCOUNT WHERE USERID = ?";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, userID);
 			

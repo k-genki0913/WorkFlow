@@ -54,8 +54,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("Account", account);
 			
 			//ホーム画面へリダイレクト
-			//response.sendRedirect("");
-			System.out.println("ログインに成功しました");
+			response.sendRedirect("Home");
 		} else {
 			request.setAttribute("errMsg", msg);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");

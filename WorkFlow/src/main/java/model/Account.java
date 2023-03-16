@@ -54,4 +54,8 @@ public class Account implements Serializable{
 		this.position = position;
 	}
 	
+	public String toString() {
+		return "ログインID：" + this.id + "　パスワード：" + this.password + "　氏名：" + this.name + "　部署ID：" + this.department + "　役職ID：" + this.position;
+	}
+	
 }

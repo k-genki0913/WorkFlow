@@ -32,6 +32,6 @@
 <c:if test="${ResultMsg != null }">
 	<c:out value="${ResultMsg }" />
 </c:if>
-
+<a href="http://localhost:8080/WorkFlow/Home">ホーム画面へ戻る</a>
 </body>
 </html>
