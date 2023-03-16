@@ -8,7 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.LoginDAO;
+import model.Account;
 import model.LoginCheck;
 
 /**
@@ -37,13 +40,21 @@ public class Login extends HttpServlet {
 		String inputID = request.getParameter("userId");
 		String inputPassword = request.getParameter("password");
 		
-		//ログイン情報が正しいか判断する
+		//Accountインスタンスの生成
+		LoginDAO loginDAO = new LoginDAO();
+		Account account = loginDAO.getAccount(inputID);
+		
+		//Accountインスタンスがnull = ログイン失敗
 		LoginCheck loginCheck = new LoginCheck();
-		String msg = loginCheck.loginCheck(inputID, inputPassword);
+		String msg = loginCheck.loginCheck(account, inputPassword);
 		
 		if(msg.length() == 0) {
-			//RequestDispatcher dispatcher = request.getRequestDispatcher("");
-			//dispatcher.forward(request, response);
+			//パスワードも正しければ、accountインスタンスをセッションスコープへ保存
+			HttpSession session = request.getSession();
+			session.setAttribute("Account", account);
+			
+			//ホーム画面へリダイレクト
+			//response.sendRedirect("");
 			System.out.println("ログインに成功しました");
 		} else {
 			request.setAttribute("errMsg", msg);

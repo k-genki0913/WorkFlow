@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import model.Account;
 
 public class LoginDAO {
 	
@@ -15,8 +15,7 @@ public class LoginDAO {
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 	
-	public List<String> dbUserInfo(String userID) {
-		List<String> dbUserInfo = new ArrayList<>();
+	public Account getAccount(String userID) {
 		
 		//h2へのドライバを読み込む
 		try {
@@ -29,7 +28,7 @@ public class LoginDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
 			//引数のUSERIDと一致するデータを検索するSELECT文を作成
 			//アカウントとパスワードの一致を確認するためだけなので、IDとPASSの情報のみ取得
-			String sql = "SELECT USERID, PASSWORD FROM ACCOUNT WHERE USERID = ?";
+			String sql = "SELECT ＊ FROM ACCOUNT WHERE USERID = ?";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, userID);
 			
@@ -41,13 +40,15 @@ public class LoginDAO {
 			if(rs.next()) {
 				String getId = rs.getString(1);
 				String getPassword = rs.getString(2);
-				dbUserInfo.add(getId);
-				dbUserInfo.add(getPassword);
+				String getName = rs.getString(3);
+				int getDepartmentID = rs.getInt(4);
+				int getPositionID = rs.getInt(5);
+				Account account = new Account(getId, getPassword, getName, getDepartmentID, getPositionID);
+				return account;
 			} else {
 				return null;
 			}
 			
-			return dbUserInfo;
 		} catch(SQLException e) {
 			e.printStackTrace();
 			return null;
