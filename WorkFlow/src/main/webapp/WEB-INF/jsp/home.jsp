@@ -14,7 +14,7 @@
 	<td><a href="">検索</a></td>
 	<td><a href="">申請中</a></td>
 	<c:if test="${Account.getPosition() == 1 }">
-		<td><a href="http://localhost:8080/WorkFlow/RegistUser">管理者機能</a></td>
+		<td><a href="http://localhost:8080/WorkFlow/AdminWindow">管理者機能</a></td>
 	</c:if>
 	<td><a href="http://localhost:8080/WorkFlow/Logout">ログアウト</a></td>
 </tr>

@@ -36,7 +36,7 @@ public class LoginDAO {
 			ResultSet rs = pStmt.executeQuery();
 			
 			//UserIDはデータベースでPRIMARY KEYにしているため、検索結果はTrue(1件)かFalseしかあり得ない
-			//SELECT分の結果をArrayListに格納
+			//SELECT分の結果をAccountインスタンスに格納
 			if(rs.next()) {
 				String getId = rs.getString(1);
 				String getPassword = rs.getString(2);
