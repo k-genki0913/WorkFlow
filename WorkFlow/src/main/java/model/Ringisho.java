@@ -3,45 +3,81 @@ package model;
 import java.io.Serializable;
 
 public class Ringisho implements Serializable{
-	private int formNo;
+	private int formID;
+	private String document;
 	private String applicantName;
 	private int departmentID;
+	private int situation;
+	private String mApprover;
+	private String gmApprover;
 	private String contents;
-	private int manager;
-	private int gManager;
 	
 	public Ringisho() {}
-	public Ringisho(int formNo, String applicantName, int departmentID, String contents, int manager, int gManager) {
-		this.formNo = formNo;
+	public Ringisho(int formID, String document, String applicantName, int departmentID, int situation, String mApprover, String gmApprover, String contents) {
+		this.formID = formID;
+		this.document = document;
 		this.applicantName = applicantName;
 		this.departmentID = departmentID;
+		this.situation = situation;
+		this.mApprover = mApprover;
+		this.gmApprover = gmApprover;
 		this.contents = contents;
-		this.manager = manager;
-		this.gManager = gManager;
 	}
 	
-	public int getFormNo() {
-		return this.formNo;
+	public int getFormID() {
+		return this.formID;
 	}
 	
-	public void setFormNo(int no) {
-		this.formNo = no;
+	public void setFormID(int formID) {
+		this.formID = formID;
+	}
+	
+	public String getDocument() {
+		return this.document;
+	}
+	
+	public void setDocument(String document) {
+		this.document = document;
 	}
 	
 	public String getApplicantName() {
 		return this.applicantName;
 	}
 	
-	public void setApplicantName(String name) {
-		this.applicantName = name;
+	public void setApplicantName(String applicantName) {
+		this.applicantName = applicantName;
 	}
 	
-	public int getDepartment() {
+	public int getDepartmentID() {
 		return this.departmentID;
 	}
 	
-	public void setDepartment(int departmentID) {
+	public void setDepartmentID(int departmentID) {
 		this.departmentID = departmentID;
+	}
+	
+	public int getSituation() {
+		return this.situation;
+	}
+	
+	public void setSituation(int situation) {
+		this.situation = situation;
+	}
+	
+	public String getMApprover() {
+		return this.mApprover;
+	}
+	
+	public void setMApprover(String mApprover) {
+		this.mApprover = mApprover;
+	}
+	
+	public String getGMApprover() {
+		return this.gmApprover;
+	}
+	
+	public void setGMApprover(String gmApprover) {
+		this.gmApprover = gmApprover;
 	}
 	
 	public String getContents() {
@@ -52,20 +88,5 @@ public class Ringisho implements Serializable{
 		this.contents = contents;
 	}
 	
-	public int getManager() {
-		return this.manager;
-	}
-	
-	public void setManager(int manager) {
-		this.manager = manager;
-	}
-	
-	public int getGManager() {
-		return this.gManager;
-	}
-	
-	public void setGManager(int gManager) {
-		this.gManager = gManager;
-	}
 
 }

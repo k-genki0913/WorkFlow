@@ -16,7 +16,7 @@
 <form action="NewRingisho" method="post">
 申請理由：<br>
 <textarea name="contents" rows="10" cols="60"></textarea><br>
-<input type="hidden" name="name" value="${Account.getId() }">
+<input type="hidden" name="applicantName" value="${Account.getId() }">
 <input type="hidden" name="departmentID" value="${Account.getDepartment() }">
 <input type="submit" value="提出">
 </form>

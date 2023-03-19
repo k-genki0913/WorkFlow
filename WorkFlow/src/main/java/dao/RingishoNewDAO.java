@@ -21,11 +21,12 @@ public class RingishoNewDAO {
 		//データベースへの接続
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//INSERT文の作成
-			String sql = "INSERT INTO RINGISHO(APPLICANTNAME, DEPARTMENTID, CONTENTS) VALUES(?, ?, ?)";
+			String sql = "INSERT INTO RINGISHO(APPLICANTNAME, DEPARTMENTID, CONTENTS, SITUATION) VALUES(?, ?, ?, ?)";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setString(1, applicantName);
 			pStmt.setInt(2, departmentID);
 			pStmt.setString(3, contents);
+			pStmt.setInt(4, 2);
 			
 			//INSERT文の実行
 			int r = pStmt.executeUpdate();

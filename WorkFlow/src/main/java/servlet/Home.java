@@ -1,5 +1,6 @@
 package servlet;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.HomeListDAO;
 import model.Account;
-import model.Ringisho;
-
+import model.HomeDocument;
 
 
 /**
@@ -30,18 +30,17 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//今後、jspファイルで表示する一覧を出力する処理を記載予定
+		//documentListメソッドにdepartmentID、positionIDを渡すために、アカウント情報を生成
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("Account");
-		List<Ringisho> list = new ArrayList<>();
-		int positionID = account.getPosition();
-		if(positionID == 1 || positionID == 2) {
-			HomeListDAO homeListDAO = new HomeListDAO();
-			list = homeListDAO.requestList(account);
-			request.setAttribute("RequestList", list);
-		}
+		Account account = (Account)session.getAttribute("Account");
 		
+		//アカウントの役職、部署ごとに表示される承認待ち書類を一覧から取得
+		List<HomeDocument> list = new ArrayList<>();
+		HomeListDAO homeListDAO = new HomeListDAO();
+		list = homeListDAO.documentList(account.getDepartment(), account.getPosition());
 		
+		//取得したものをリクエストセッションへ保存
+		request.setAttribute("HomeList", list);
 		
 		//ホーム画面を表示
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/home.jsp");

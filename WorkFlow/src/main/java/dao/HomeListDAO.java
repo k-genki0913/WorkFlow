@@ -8,62 +8,48 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Account;
-import model.Ringisho;
+import model.HomeDocument;
 
 public class HomeListDAO {
-	//データベースへ接続するための情報
-	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/WorkFlow";
-	private final String JDBC_USER = "sa";
-	private final String JDBC_PASS = "";
-
-	public List<Ringisho> requestList(Account account) {
-		//検索に必要な情報
-		int departmentID = account.getDepartment();
-		int positionID = account.getPosition();
-		String sqlPosition = ""; 
-		if(positionID == 1) {
-			sqlPosition = "GMANAGER";
-		} else if(positionID == 2) {
-			sqlPosition = "MANAGER";
-		}
+	private String JDBC_URL = "jdbc:h2:tcp://localhost/~/WorkFlow";
+	private String JDBC_USER = "sa";
+	private String JDBC_PASS = "";
+	
+	public List<HomeDocument> documentList(int departmentID, int positionID){
+		List<HomeDocument> list = new ArrayList<>();
 		
-		//戻り値のList
-		List<Ringisho> list = new ArrayList<>();
-		
+		//ドライバの取得
 		try {
 			Class.forName("org.h2.Driver");
 		} catch(ClassNotFoundException e) {
 			throw new IllegalStateException("ドライバを読み込めませんでした");
 		}
 		
+		//データベースへの接続
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
-			String sql = "SELECT * FROM RINGISHO WHERE DEPARTMENTID = ? AND ? = 0 ORDER BY FORMID";
+			//データベースが増えると記述を変更する必要がある
+			String sql = "SELECT FORMID, DOCUMENT, APPLICANTNAME FROM RINGISHO WHERE DEPARTMENTID = ? AND SITUATION = ?";
 			PreparedStatement pStmt = con.prepareStatement(sql);
+			pStmt.setInt(1, departmentID);
+			pStmt.setInt(2, positionID);
 			
-			pStmt.setInt(1, positionID);
-			pStmt.setString(2, sqlPosition);
-			
+			//SELECT文を実行し、結果表を取得
 			ResultSet rs = pStmt.executeQuery();
+			
+			//HomeDocumentインスタンスを作成し、リストへ追加
 			while(rs.next()) {
-				int formNo = rs.getInt(1);
-				String applicantName = rs.getString(2);
-				int department = rs.getInt(3);
-				String contents = rs.getString(4);
-				int manager = rs.getInt(5);
-				int gManager = rs.getInt(6);
-				Ringisho ringisho = new Ringisho(formNo, applicantName, department, contents, manager, gManager);
-				list.add(ringisho);
+				int formID = rs.getInt(1);
+				String documentName = rs.getString(2);
+				String applicantName = rs.getString(3);
+				HomeDocument homeDocument = new HomeDocument(formID, documentName, applicantName);
+				list.add(homeDocument);
 			}
 			return list;
-		} catch(SQLException e) {
+		}catch(SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		
-		
-		
-		
-	} 
+	}
 }

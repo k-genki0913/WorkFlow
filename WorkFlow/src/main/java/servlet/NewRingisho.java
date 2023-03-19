@@ -34,7 +34,7 @@ public class NewRingisho extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String applicantName = request.getParameter("name");
+		String applicantName = request.getParameter("applicantName");
 		int departmentID = Integer.parseInt(request.getParameter("departmentID"));
 		String contents = request.getParameter("contents");
 		
