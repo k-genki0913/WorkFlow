@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.AllUserDAO;
 import model.Account;
-import model.DepartmentConvert;
-import model.PositionConvert;
 
 /**
  * Servlet implementation class AdminWindow
@@ -38,15 +36,6 @@ public class AdminWindow extends HttpServlet {
 		//adminWindow.jspへユーザー一覧をリクエストスコープで送る
 		//その画面上で毎回更新されたらいいので、リクエストスコープに保存する
 		request.setAttribute("AllUserList", userList);
-		
-		//adminWindow.jspでAccounインスタンスの部署IDを部署名に変換するために
-		//DepartmentConvertを生成し、リクエストスコープへ保存
-		DepartmentConvert dc = new DepartmentConvert();
-		request.setAttribute("Dc", dc);
-		
-		//上記と同じ方法で役職名を変換する
-		PositionConvert pc = new PositionConvert();
-		request.setAttribute("Pc", pc);
 				
 		//adminWindow.jspへフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/adminWindow.jsp");

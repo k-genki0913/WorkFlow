@@ -38,7 +38,7 @@ public class Logout extends HttpServlet {
 		
 		if(logout == 1) {
 			//セッションスコープに保存されている情報を削除
-			//Accountインスタンスが削除される
+			//Accountインスタンス、DepartmetConvert、PositionConvertが削除される
 			HttpSession session = request.getSession();
 			session.invalidate();
 			

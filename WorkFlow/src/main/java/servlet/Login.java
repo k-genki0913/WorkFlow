@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import dao.LoginDAO;
 import model.Account;
+import model.DepartmentConvert;
 import model.LoginCheck;
+import model.PositionConvert;
 
 /**
  * Servlet implementation class Login
@@ -52,6 +54,17 @@ public class Login extends HttpServlet {
 			//パスワードも正しければ、accountインスタンスをセッションスコープへ保存
 			HttpSession session = request.getSession();
 			session.setAttribute("Account", account);
+			
+			//ログイン時に多くの画面で利用するためでAccounインスタンスの部署IDを部署名に変換するために
+			//DepartmentConvertを生成し、セッションスコープへ保存
+			DepartmentConvert dc = new DepartmentConvert();
+			HttpSession departmentSession = request.getSession();
+			departmentSession.setAttribute("Dc", dc);
+					
+			//上記と同じ方法で役職名を変換する
+			PositionConvert pc = new PositionConvert();
+			HttpSession positionSession = request.getSession();
+			positionSession.setAttribute("Pc", pc);
 			
 			//ホーム画面へリダイレクト
 			response.sendRedirect("Home");
