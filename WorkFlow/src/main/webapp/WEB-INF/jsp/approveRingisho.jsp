@@ -9,11 +9,17 @@
 </head>
 <body>
 <h1>稟議書</h1>
+<c:out value="${registErrMsg }" />
 <a href="Home">ホーム画面へ戻る</a>
-<p>申請者：<c:out value="${Account.getName() }" /></p>
-<p>部署：<c:out value="${Dc.departmentName(Account.getDepartment())}"></c:out>
+<p>申請者：<c:out value="${Ringisho.getApplicantName() }" /></p>
+<p>部署：<c:out value="${Dc.departmentName(Ringisho.getDepartmentID())}"></c:out>
 <p>申請理由：</p>
-<p style="border-width:1px; border-style:solid;"><c:out value="${Ringisho.getContents() }" /></p>
+<p style="border-width:1px; border-style:solid;" width:1000px;
+  height:250px;
+  border:1px solid black;
+  word-wrap: break-word;>
+  <c:out value="${Ringisho.getContents() }" />
+</p>
 <table border="1">
 <tr>
 	<th>課長承認</th><th>部長承認</th>
@@ -41,10 +47,12 @@
 	</td>
 </tr>
 </table>
-<form action="ApproveRingisho" method="post">
-<input type="radio" name="logout" value="1">承認<br>
-<input type="radio" name="logout" value="-1">否認<br>
+<form action="DocumentApprove" method="post">
+<input type="radio" name="result" value="1">承認<br>
+<input type="radio" name="result" value="-1">否認<br>
 <input type="submit" value="確定">
+<input type="hidden" name="approver" value="${Account.getId() }">
+<input type="hidden" name="formID" value="${Ringisho.getFormID() }">
 </form>
 </body>
 </html>

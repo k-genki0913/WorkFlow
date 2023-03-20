@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.RingishoApproveDAO;
 import model.ApproveRingisho;
 import model.DocumentCheck;
 import model.Ringisho;
+
 
 /**
  * Servlet implementation class DocumentApprove
@@ -49,7 +51,48 @@ public class DocumentApprove extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		int approveresult = Integer.parseInt(request.getParameter("result"));
+		String approver = request.getParameter("approver");
+		int formID = Integer.parseInt(request.getParameter("formID"));
+		
+		System.out.println(approveresult);
+		System.out.println(approver);
+		System.out.println(formID);
+		
+		DocumentCheck documentCheck = new DocumentCheck();
+		String documentTable = documentCheck.check(formID);
+		
+		System.out.println(documentTable);
+		
+		if(documentTable.equals("RINGISHO")) {
+			System.out.println("IF RINGISHO");
+			ApproveRingisho aRingisho = new ApproveRingisho();
+			Ringisho ringisho = new Ringisho();
+			ringisho = aRingisho.getRingisho(formID);
+			if(approveresult == 1) {
+				if(ringisho.getSituation() == 2) {
+					ringisho.setSituation(1);
+					ringisho.setMApprover(approver);
+				} else if(ringisho.getSituation() == 1) {
+					ringisho.setSituation(0);
+					ringisho.setGMApprover(approver);
+				}
+			} else if(approveresult == -1) {
+				ringisho.setSituation(ringisho.getSituation() - approveresult);
+			}
+			RingishoApproveDAO rADAO = new RingishoApproveDAO();
+			boolean regist = rADAO.approveRingisho(approveresult, ringisho);
+			System.out.println(regist);
+			if(regist) {
+				response.sendRedirect("Home");
+			} else {
+				request.setAttribute("registErrMsg", "再度登録してください");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveRingisho.jsp");
+				dispatcher.forward(request, response);
+			}
+		}
+		
 	}
 
 }
