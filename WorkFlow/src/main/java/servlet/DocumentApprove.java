@@ -29,11 +29,11 @@ public class DocumentApprove extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		int formID = Integer.parseInt(request.getParameter("formID"));
+		String documentTable = "RINGISHO";
 		
+		System.out.println(formID);
 		
-		DocumentCheck documentCheck = new DocumentCheck();
-		String documentTable = documentCheck.check(formID);
-		
+		System.out.println(documentTable);
 		
 		if(documentTable.equals("RINGISHO")) {
 			ApproveRingisho aRingisho = new ApproveRingisho();
@@ -42,6 +42,8 @@ public class DocumentApprove extends HttpServlet {
 			request.setAttribute("Ringisho", ringisho);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveRingisho.jsp");
 			dispatcher.forward(request, response);
+		} else if(documentTable.equals("USERREGIST")) {
+			System.out.println("ユーザー登録承認画面へ移動するところまで来ている");
 		}
 		
 	}

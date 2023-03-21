@@ -26,7 +26,7 @@ public class ApprovedListDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
 			//テーブルが増えたらUNIONで追加していく
-			String sql = "SELECT FORMID, DOCUMENT, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = ?";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = ?";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			
 			//表示する書類は、applicantNameが自分のIDのもの
@@ -39,8 +39,9 @@ public class ApprovedListDAO {
 			while(rs.next()) {
 				int formID = rs.getInt(1);
 				String documentName = rs.getString(2);
-				String applicantName = rs.getString(3);
-				HomeDocument homeDocument = new HomeDocument(formID, documentName, applicantName);
+				String documentTable = rs.getString(3);
+				String applicantName = rs.getString(4);
+				HomeDocument homeDocument = new HomeDocument(formID, documentName, documentTable, applicantName);
 				list.add(homeDocument);
 			}
 			return list;

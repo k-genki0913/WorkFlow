@@ -25,7 +25,7 @@ public class RemandListDAO {
 		
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
-			String sql = "SELECT FORMID, DOCUMENT, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = 99";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = 99";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 	
 			pStmt.setString(1, userID);
@@ -35,8 +35,9 @@ public class RemandListDAO {
 			while(rs.next()) {
 				int formID = rs.getInt(1);
 				String document = rs.getString(2);
-				String applicantName = rs.getString(3);
-				HomeDocument homeDocument = new HomeDocument(formID, document, applicantName);
+				String documentTable = rs.getString(3);
+				String applicantName = rs.getString(4);
+				HomeDocument homeDocument = new HomeDocument(formID, document, documentTable, applicantName);
 				list.add(homeDocument);
 			}
 			return list;

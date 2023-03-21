@@ -9,7 +9,7 @@
 <body>
 <a href="NewRingisho">稟議書</a>
 <a href="">社員捺印</a>
-<a href="">ユーザー登録依頼書</a>
+<a href="NewUserRegist">ユーザー登録依頼書</a>
 <a href="Home">ホーム画面へ戻る</a>
 </body>
 </html>

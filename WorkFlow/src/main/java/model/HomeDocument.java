@@ -4,14 +4,16 @@ import java.io.Serializable;
 
 public class HomeDocument implements Serializable{
 	private int formID;
-	private String documentName;
+	private String document;
+	private String documentTable;
 	private String applicantName;
 	
 	public HomeDocument() {}
 	
-	public HomeDocument(int formID, String documentName, String applicantName) {
+	public HomeDocument(int formID,String document, String documentTable, String applicantName) {
 		this.formID = formID;
-		this.documentName = documentName;
+		this.document = document;
+		this.documentTable = documentTable;
 		this.applicantName = applicantName;
 	}
 	
@@ -23,13 +25,18 @@ public class HomeDocument implements Serializable{
 		this.formID = formID;
 	}
 	
+	public String getDocumentTable() {
+		return this.documentTable;
+	}
+	
 	public String getDocumentName() {
-		return this.documentName;
+		return this.document;
 	}
 	
 	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
+		this.document = documentName;
 	}
+	
 	
 	public String getApplicantName() {
 		return this.applicantName;

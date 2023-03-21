@@ -29,7 +29,8 @@ public class HomeListDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
 			//データベースが増えると記述を変更する必要がある
-			String sql = "SELECT FORMID, DOCUMENT, APPLICANTNAME FROM RINGISHO WHERE DEPARTMENTID = ? AND SITUATION = ?";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE DEPARTMENTID = ? AND SITUATION = ?";
+			
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setInt(1, departmentID);
 			pStmt.setInt(2, positionID);
@@ -41,10 +42,12 @@ public class HomeListDAO {
 			while(rs.next()) {
 				int formID = rs.getInt(1);
 				String documentName = rs.getString(2);
-				String applicantName = rs.getString(3);
-				HomeDocument homeDocument = new HomeDocument(formID, documentName, applicantName);
+				String documentTable = rs.getString(3);
+				String applicantName = rs.getString(4);
+				HomeDocument homeDocument = new HomeDocument(formID, documentName, documentTable, applicantName);
 				list.add(homeDocument);
 			}
+			
 			return list;
 		}catch(SQLException e) {
 			e.printStackTrace();
