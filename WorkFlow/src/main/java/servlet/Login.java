@@ -15,6 +15,7 @@ import model.Account;
 import model.DepartmentConvert;
 import model.LoginCheck;
 import model.PositionConvert;
+import model.UserIDConvert;
 
 /**
  * Servlet implementation class Login
@@ -58,13 +59,15 @@ public class Login extends HttpServlet {
 			//ログイン時に多くの画面で利用するためでAccounインスタンスの部署IDを部署名に変換するために
 			//DepartmentConvertを生成し、セッションスコープへ保存
 			DepartmentConvert dc = new DepartmentConvert();
-			HttpSession departmentSession = request.getSession();
-			departmentSession.setAttribute("Dc", dc);
+			session.setAttribute("Dc", dc);
 					
 			//上記と同じ方法で役職名を変換する
 			PositionConvert pc = new PositionConvert();
-			HttpSession positionSession = request.getSession();
-			positionSession.setAttribute("Pc", pc);
+			session.setAttribute("Pc", pc);
+			
+			//同じ方法でユーザー名を変換する
+			UserIDConvert uic = new UserIDConvert();
+			session.setAttribute("Uic", uic);
 			
 			//ホーム画面へリダイレクト
 			response.sendRedirect("Home");

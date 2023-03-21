@@ -14,7 +14,8 @@
 <tr>
 	<td><a href="http://localhost:8080/WorkFlow/NewDocument">申請書新規作成</a></td>
 	<td><a href="">検索</a></td>
-	<td><a href="">申請中</a></td>
+	<td><a href="RemandList">差し戻し</a></td>
+	<td><a href="ApprovedList">承認済み</a>
 	<c:if test="${Account.getPosition() == 1 }">
 		<td><a href="http://localhost:8080/WorkFlow/AdminWindow">管理者機能</a></td>
 	</c:if>
@@ -34,7 +35,7 @@
 		<input type="hidden" name="formID" value="${document.getFormID() }">
 		</form>
 		<td><c:out value="${document.getDocumentName()}" /></td>
-		<td><c:out value="${document.getApplicantName()}"/></td>
+		<td><c:out value="${Uic.getName(document.getApplicantName())}"/></td>
 	</tr>
 </c:forEach>
 </table>

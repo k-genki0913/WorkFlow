@@ -56,17 +56,10 @@ public class DocumentApprove extends HttpServlet {
 		String approver = request.getParameter("approver");
 		int formID = Integer.parseInt(request.getParameter("formID"));
 		
-		System.out.println(approveresult);
-		System.out.println(approver);
-		System.out.println(formID);
-		
 		DocumentCheck documentCheck = new DocumentCheck();
 		String documentTable = documentCheck.check(formID);
 		
-		System.out.println(documentTable);
-		
 		if(documentTable.equals("RINGISHO")) {
-			System.out.println("IF RINGISHO");
 			ApproveRingisho aRingisho = new ApproveRingisho();
 			Ringisho ringisho = new Ringisho();
 			ringisho = aRingisho.getRingisho(formID);
@@ -79,7 +72,11 @@ public class DocumentApprove extends HttpServlet {
 					ringisho.setGMApprover(approver);
 				}
 			} else if(approveresult == -1) {
-				ringisho.setSituation(ringisho.getSituation() - approveresult);
+				if(ringisho.getSituation() == 1) {
+					ringisho.setSituation(2);
+				} else if(ringisho.getSituation() == 2) {
+					ringisho.setSituation(99);
+				}
 			}
 			RingishoApproveDAO rADAO = new RingishoApproveDAO();
 			boolean regist = rADAO.approveRingisho(approveresult, ringisho);

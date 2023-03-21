@@ -11,7 +11,7 @@
 <h1>稟議書</h1>
 <c:out value="${registErrMsg }" />
 <a href="Home">ホーム画面へ戻る</a>
-<p>申請者：<c:out value="${Ringisho.getApplicantName() }" /></p>
+<p>申請者：<c:out value="${Uic.getName(Ringisho.getApplicantName()) }" /></p>
 <p>部署：<c:out value="${Dc.departmentName(Ringisho.getDepartmentID())}"></c:out>
 <p>申請理由：</p>
 <p style="border-width:1px; border-style:solid;" width:1000px;
@@ -31,7 +31,7 @@
 				未承認
 			</c:when>
 			<c:otherwise>
-				<c:out value="${Ringisho.getMApprover() }" />
+				<c:out value="${Uic.getName(Ringisho.getMApprover()) }" />
 			</c:otherwise>
 		</c:choose>
 	</td>
@@ -41,7 +41,7 @@
 				未承認
 			</c:when>
 			<c:otherwise>
-				<c:out value="${Ringisho.getGMApprover() }" />
+				<c:out value="${Uic.getName(Ringisho.getGMApprover()) }" />
 			</c:otherwise>
 		</c:choose>
 	</td>

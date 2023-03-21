@@ -1,0 +1,44 @@
+package servlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.RemandListDAO;
+import model.Account;
+import model.HomeDocument;
+
+/**
+ * Servlet implementation class RemandList
+ */
+@WebServlet("/RemandList")
+public class RemandList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		Account account = (Account)session.getAttribute("Account");
+		
+		List<HomeDocument> list = new ArrayList<>();
+		RemandListDAO rlDAO = new RemandListDAO();
+		list = rlDAO.getRemandList(account.getId());
+		
+		request.setAttribute("RemandList", list);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/remandList.jsp");
+		dispatcher.forward(request, response);
+	}
+
+}

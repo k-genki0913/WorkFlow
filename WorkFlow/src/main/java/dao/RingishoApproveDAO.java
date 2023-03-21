@@ -20,7 +20,7 @@ public class RingishoApproveDAO {
 		}
 		
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
-			//INSERT文の準備
+			//UPDATE文の準備
 			String sql = "";
 			PreparedStatement pStmt = null;
 			if(approveResult == 1) {
@@ -40,8 +40,8 @@ public class RingishoApproveDAO {
 					sql = "UPDATE RINGISHO SET SITUATION = 2, MAPPROVER = null WHERE FORMID = ?";
 					pStmt = con.prepareStatement(sql);
 					pStmt.setInt(1, ringisho.getFormID());
-				} else if(ringisho.getSituation() == 3) {
-					sql = "UPDATE RINGISHO SET SITUATION = 3 WHERE FORMID = ?";
+				} else if(ringisho.getSituation() == 99) {
+					sql = "UPDATE RINGISHO SET SITUATION = 99 WHERE FORMID = ?";
 					pStmt = con.prepareStatement(sql);
 					pStmt.setInt(1, ringisho.getFormID());
 				}
