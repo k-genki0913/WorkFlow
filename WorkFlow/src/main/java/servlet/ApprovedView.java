@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DocumentCheck;
 import model.ResultRingisho;
+import model.ResultUserRegist;
 import model.Ringisho;
+import model.UserRegist;
 
 /**
  * Servlet implementation class ApprovedView
@@ -27,9 +28,7 @@ public class ApprovedView extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		int formID = Integer.parseInt(request.getParameter("formID"));
-		
-		DocumentCheck documentCheck = new DocumentCheck();
-		String documentTable = documentCheck.check(formID);
+		String documentTable = request.getParameter("documentTable");
 		
 		if(documentTable.equals("RINGISHO")) {
 			ResultRingisho rRingisho = new ResultRingisho();
@@ -37,6 +36,13 @@ public class ApprovedView extends HttpServlet {
 			ringisho = rRingisho.getRingisho(formID);
 			request.setAttribute("Ringisho", ringisho);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/resultRingisho.jsp");
+			dispatcher.forward(request, response);
+		} else if(documentTable.equals("UserRegist")) {
+			ResultUserRegist rUserRegist = new ResultUserRegist();
+			UserRegist userRegist = new UserRegist();
+			userRegist = rUserRegist.confirm(formID);
+			request.setAttribute("UserRegist", userRegist);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/resultUserRegist.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

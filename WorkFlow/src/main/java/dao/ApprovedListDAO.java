@@ -26,13 +26,15 @@ public class ApprovedListDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
 			//テーブルが増えたらUNIONで追加していく
-			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = ?";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = ? UNION ALL SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM USERREGIST WHERE APPLICANTNAME = ? AND SITUATION = ?";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			
 			//表示する書類は、applicantNameが自分のIDのもの
 			//Situationは0が承認済みのため、0のものとする
 			pStmt.setString(1, userID);
 			pStmt.setInt(2, 0);
+			pStmt.setString(3, userID);
+			pStmt.setInt(4, 0);
 			
 			ResultSet rs = pStmt.executeQuery();
 			

@@ -27,5 +27,6 @@
 	<td><c:out value="${Uic.getName(Ringisho.getMApprover()) }" /></td>
 	<td><c:out value="${Uic.getName(Ringisho.getGMApprover()) }" /></td>
 </tr>
+</table>
 </body>
 </html>

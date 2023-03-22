@@ -15,12 +15,15 @@
 	</tr>
 	<c:forEach var="document" items="${ApprovedList }">
 		<tr>
-			<td><a href="#" onclick="document.hidden.submit();"><c:out value="${document.getFormID() }" /></a></td>
-			<form name="hidden" method="get" action="ApprovedView">
-			<input type="hidden" name="formID" value="${document.getFormID() }">
-			</form>
+			<td><c:out value="${document.getFormID() }" /></td>
 			<td><c:out value="${document.getDocumentName()}" /></td>
 			<td><c:out value="${document.getApplicantName()}"/></td>
+			<td><form name="confirm" method="get" action="ApprovedView">
+				<input type="submit" value="確認">
+				<input type="hidden" name="formID" value="${document.getFormID() }">
+				<input type="hidden" name="documentTable" value="${document.getDocumentTable() }">
+				</form>
+			</td>
 	</c:forEach>
 </table>
 </body>
