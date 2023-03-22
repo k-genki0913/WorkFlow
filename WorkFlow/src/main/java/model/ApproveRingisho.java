@@ -29,13 +29,14 @@ public class ApproveRingisho {
 			ResultSet rs = pStmt.executeQuery();
 			if(rs.next()) {
 				String document = rs.getString(2);
+				String documentTable = rs.getString(3);
 				String applicantName = rs.getString(4);
 				int departmentID = rs.getInt(5);
 				int situation = rs.getInt(6);
 				String mApprover = rs.getString(7);
 				String gmApprover = rs.getString(8);
 				String contents = rs.getString(9);
-				Ringisho ringisho = new Ringisho(formID, document, applicantName, departmentID, situation, mApprover, gmApprover, contents);
+				Ringisho ringisho = new Ringisho(formID, document, documentTable, applicantName, departmentID, situation, mApprover, gmApprover, contents);
 				return ringisho;
 			}
 			return null;

@@ -26,16 +26,19 @@
 <p>承認待ち一覧</p>
 <table border="1">
 <tr>
-	<th>フォームNo.</th><th>申請書類</th><th>申請者</th>
+	<th>フォームNo.</th><th>申請書類</th><th>申請者</th><th>承認</th>
 </tr>
 <c:forEach var="document" items="${HomeList}">
 	<tr>
-		<td><a href="#" onclick="document.hidden.submit();"><c:out value="${document.getFormID() }" /></a></td>
-		<form name="hidden" method="get" action="DocumentApprove">
-		<input type="hidden" name="formID" value="${document.getFormID() }">
-		</form>
+		<td><c:out value="${document.getFormID() }" /></td>
 		<td><c:out value="${document.getDocumentName()}" /></td>
 		<td><c:out value="${Uic.getName(document.getApplicantName())}"/></td>
+		<td><form name="approve" method="get" action="DocumentApprove">
+			<input type="submit" value="承認画面へ">
+			<input type="hidden" name="formID" value="${document.getFormID() }">
+			<input type="hidden" name="documentTable" value="${document.getDocumentTable() }">
+			</form>
+		</td>
 	</tr>
 </c:forEach>
 </table>

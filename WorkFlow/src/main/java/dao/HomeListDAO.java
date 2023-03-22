@@ -29,11 +29,13 @@ public class HomeListDAO {
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
 			//データベースが増えると記述を変更する必要がある
-			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE DEPARTMENTID = ? AND SITUATION = ?";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE DEPARTMENTID = ? AND SITUATION = ? UNION ALL SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM USERREGIST WHERE DEPARTMENTID = ? AND SITUATION = ?";
 			
 			PreparedStatement pStmt = con.prepareStatement(sql);
 			pStmt.setInt(1, departmentID);
 			pStmt.setInt(2, positionID);
+			pStmt.setInt(3, departmentID);
+			pStmt.setInt(4, positionID);
 			
 			//SELECT文を実行し、結果表を取得
 			ResultSet rs = pStmt.executeQuery();

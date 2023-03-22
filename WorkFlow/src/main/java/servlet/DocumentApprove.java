@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.RingishoApproveDAO;
+import dao.UserRegistApproveDAO;
 import model.ApproveRingisho;
-import model.DocumentCheck;
+import model.ApproveUserRegist;
 import model.Ringisho;
+import model.UserRegist;
 
 
 /**
@@ -29,7 +31,7 @@ public class DocumentApprove extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		int formID = Integer.parseInt(request.getParameter("formID"));
-		String documentTable = "RINGISHO";
+		String documentTable = request.getParameter("documentTable");
 		
 		System.out.println(formID);
 		
@@ -42,8 +44,13 @@ public class DocumentApprove extends HttpServlet {
 			request.setAttribute("Ringisho", ringisho);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveRingisho.jsp");
 			dispatcher.forward(request, response);
-		} else if(documentTable.equals("USERREGIST")) {
-			System.out.println("ユーザー登録承認画面へ移動するところまで来ている");
+		} else if(documentTable.equals("UserRegist")) {
+			ApproveUserRegist aUserRegist = new ApproveUserRegist();
+			UserRegist userRegist = new UserRegist();
+			userRegist = aUserRegist.getUserRegist(formID);
+			request.setAttribute("UserRegist", userRegist);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveUserRegist.jsp");
+			dispatcher.forward(request, response);
 		}
 		
 	}
@@ -57,9 +64,7 @@ public class DocumentApprove extends HttpServlet {
 		int approveresult = Integer.parseInt(request.getParameter("result"));
 		String approver = request.getParameter("approver");
 		int formID = Integer.parseInt(request.getParameter("formID"));
-		
-		DocumentCheck documentCheck = new DocumentCheck();
-		String documentTable = documentCheck.check(formID);
+		String documentTable = request.getParameter("documentTable");
 		
 		if(documentTable.equals("RINGISHO")) {
 			ApproveRingisho aRingisho = new ApproveRingisho();
@@ -82,12 +87,39 @@ public class DocumentApprove extends HttpServlet {
 			}
 			RingishoApproveDAO rADAO = new RingishoApproveDAO();
 			boolean regist = rADAO.approveRingisho(approveresult, ringisho);
-			System.out.println(regist);
 			if(regist) {
 				response.sendRedirect("Home");
 			} else {
 				request.setAttribute("registErrMsg", "再度登録してください");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveRingisho.jsp");
+				dispatcher.forward(request, response);
+			}
+		} else if(documentTable.equals("UserRegist")) {
+			ApproveUserRegist aUserRegist = new ApproveUserRegist();
+			UserRegist userRegist = new UserRegist();
+			userRegist = aUserRegist.getUserRegist(formID);
+			if(approveresult == 1) {
+				if(userRegist.getSituation() == 2) {
+					userRegist.setSituation(1);
+					userRegist.setMApprover(approver);
+				} else if(userRegist.getSituation() == 1) {
+					userRegist.setSituation(0);
+					userRegist.setGMApprover(approver);
+				}
+			} else if(approveresult == -1) {
+				if(userRegist.getSituation() == 1) {
+					userRegist.setSituation(2);
+				} else if(userRegist.getSituation() == 2) {
+					userRegist.setSituation(99);
+				}
+			}
+			UserRegistApproveDAO uraDAO = new UserRegistApproveDAO();
+			boolean regist = uraDAO.approve(approveresult, userRegist);
+			if(regist) {
+				response.sendRedirect("Home");
+			} else {
+				request.setAttribute("registErrMsg", "再度登録してください");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/approveUserRegist.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

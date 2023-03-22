@@ -53,6 +53,7 @@
 <input type="submit" value="確定">
 <input type="hidden" name="approver" value="${Account.getId() }">
 <input type="hidden" name="formID" value="${Ringisho.getFormID() }">
+<input type="hidden" name="documentTable" value="${Ringisho.getDocumentTable() }">
 </form>
 </body>
 </html>

@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Ringisho implements Serializable{
+public class UserRegist implements Serializable{
 	private int formID;
 	private String document;
 	private String documentTable;
@@ -11,10 +11,12 @@ public class Ringisho implements Serializable{
 	private int situation;
 	private String mApprover;
 	private String gmApprover;
-	private String contents;
+	private String registName;
+	private int registDepartment;
+	private int registPosition;
 	
-	public Ringisho() {}
-	public Ringisho(int formID, String document, String documentTable, String applicantName, int departmentID, int situation, String mApprover, String gmApprover, String contents) {
+	public UserRegist() {}
+	public UserRegist(int formID, String document, String documentTable, String applicantName, int departmentID, int situation, String mApprover, String gmApprover, String registName, int registDepartment, int registPosition) {
 		this.formID = formID;
 		this.document = document;
 		this.documentTable = documentTable;
@@ -23,23 +25,17 @@ public class Ringisho implements Serializable{
 		this.situation = situation;
 		this.mApprover = mApprover;
 		this.gmApprover = gmApprover;
-		this.contents = contents;
+		this.registName = registName;
+		this.registDepartment = registDepartment;
+		this.registPosition = registPosition;
 	}
 	
 	public int getFormID() {
 		return this.formID;
 	}
 	
-	public void setFormID(int formID) {
-		this.formID = formID;
-	}
-	
 	public String getDocument() {
 		return this.document;
-	}
-	
-	public void setDocument(String document) {
-		this.document = document;
 	}
 	
 	public String getDocumentTable() {
@@ -50,16 +46,8 @@ public class Ringisho implements Serializable{
 		return this.applicantName;
 	}
 	
-	public void setApplicantName(String applicantName) {
-		this.applicantName = applicantName;
-	}
-	
 	public int getDepartmentID() {
 		return this.departmentID;
-	}
-	
-	public void setDepartmentID(int departmentID) {
-		this.departmentID = departmentID;
 	}
 	
 	public int getSituation() {
@@ -86,13 +74,15 @@ public class Ringisho implements Serializable{
 		this.gmApprover = gmApprover;
 	}
 	
-	public String getContents() {
-		return this.contents;
+	public String getRegistName() {
+		return this.registName;
 	}
 	
-	public void setContents(String contents) {
-		this.contents = contents;
+	public int getRegistDepartment() {
+		return this.registDepartment;
 	}
 	
-
+	public int getRegistPosition() {
+		return this.registPosition;
+	}
 }

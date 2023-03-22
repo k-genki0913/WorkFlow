@@ -13,6 +13,8 @@
 <a href="NewDocument">申請書選択画面へ戻る</a>
 <p>申請者：<c:out value="${Account.getName() }" /></p>
 <p>部署：<c:out value="${Dc.departmentName(Account.getDepartment()) }" /></p>
+<br>
+<p>依頼内容</p>
 <form action="NewUserRegist" method="post">
 <input type="hidden" name="applicantName" value="${Account.getId() }">
 <input type="hidden" name="applicantDepartment" value="${Account.getDepartment() }">
