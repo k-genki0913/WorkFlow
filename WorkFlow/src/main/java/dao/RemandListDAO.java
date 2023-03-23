@@ -25,10 +25,11 @@ public class RemandListDAO {
 		
 		try(Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS)){
 			//SELECT文の準備
-			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = 99";
+			String sql = "SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM RINGISHO WHERE APPLICANTNAME = ? AND SITUATION = 99 UNION ALL SELECT FORMID, DOCUMENT, DOCUMENTTABLE, APPLICANTNAME FROM USERREGIST WHERE APPLICANTNAME = ? AND SITUATION = 99";
 			PreparedStatement pStmt = con.prepareStatement(sql);
 	
 			pStmt.setString(1, userID);
+			pStmt.setString(2, userID);
 			
 			ResultSet rs = pStmt.executeQuery();
 			

@@ -11,8 +11,8 @@
 <h1>ユーザー登録依頼書</h1>
 <c:out value="${errMsg }" />
 <a href="NewDocument">申請書選択画面へ戻る</a>
-<p>申請者：<c:out value="${Account.getName() }" /></p>
-<p>部署：<c:out value="${Dc.departmentName(Account.getDepartment()) }" /></p>
+<p>申請者：<c:out value="${Uic.getName(UserRegist.getApplicantName()) }" /></p>
+<p>部署：<c:out value="${Dc.departmentName(UserRegist.getDepartmentID()) }" /></p>
 <br>
 <p>依頼内容</p>
 <p>氏名：<c:out value="${UserRegist.getRegistName() }" /></p>
