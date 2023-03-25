@@ -15,7 +15,6 @@
 <p>部署：<c:out value="${Dc.departmentName(Account.getDepartment())}"></c:out></p>
 <form action="ReRingisho" method="post">
 申請理由：<br>
-<!-- textareaの初期値はJSTLを使うと<c:out/>から表示されてしまうので、EL式で対応 -->
 <textarea name="contents" rows="10" cols="60">${Ringisho.getContents() }</textarea><br>
 <input type="hidden" name="formID" value="${Ringisho.getFormID() }">
 <input type="hidden" name="documentName" value="RINGISHO">

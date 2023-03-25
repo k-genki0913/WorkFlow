@@ -13,7 +13,7 @@
 <table border="1">
 <tr>
 	<td><a href="http://localhost:8080/WorkFlow/NewDocument">申請書新規作成</a></td>
-	<td><a href="">検索</a></td>
+	<td><a href="Search">検索</a></td>
 	<td><a href="RemandList">差し戻し</a></td>
 	<td><a href="ApprovedList">承認済み</a>
 	<c:if test="${Account.getPosition() == 1 }">

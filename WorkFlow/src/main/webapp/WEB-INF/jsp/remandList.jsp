@@ -18,13 +18,14 @@
 		<tr>
 			<td><c:out value="${document.getFormID() }" /></td>
 			<td><c:out value="${document.getDocumentName()}" /></td>
-			<td><c:out value="${document.getApplicantName()}"/></td>
+			<td><c:out value="${Uic.getName(document.getApplicantName())}"/></td>
 			<td><form name="remand" method="get" action="RemandView">
 				<input type="submit" value="確認画面へ">
 				<input type="hidden" name="formID" value="${document.getFormID() }">
 				<input type="hidden" name="documentTable" value="${document.getDocumentTable() }">
 				</form>
 			</td>
+		</tr>
 	</c:forEach>
 </table>
 </body>

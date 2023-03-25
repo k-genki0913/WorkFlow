@@ -9,6 +9,7 @@
 </head>
 <body>
 <p>承認済み一覧</p>
+<a href="Home">ホーム画面へ戻る</a>
 <table border="1">
 	<tr>
 		<th>フォームNo.</th><th>申請書類</th><th>申請者</th>
@@ -17,13 +18,14 @@
 		<tr>
 			<td><c:out value="${document.getFormID() }" /></td>
 			<td><c:out value="${document.getDocumentName()}" /></td>
-			<td><c:out value="${document.getApplicantName()}"/></td>
+			<td><c:out value="${Uic.getName(document.getApplicantName())}"/></td>
 			<td><form name="confirm" method="get" action="ApprovedView">
 				<input type="submit" value="確認">
 				<input type="hidden" name="formID" value="${document.getFormID() }">
 				<input type="hidden" name="documentTable" value="${document.getDocumentTable() }">
 				</form>
 			</td>
+		</tr>
 	</c:forEach>
 </table>
 </body>
